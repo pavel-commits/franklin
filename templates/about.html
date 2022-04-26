@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    li.main-ul-li {
+        margin: 50px auto;
+        font-size: 20px;
+    }
+
+    li.main-ul-li ul li {
+        margin: 10px auto;
+    }
+
+    a.reg {
+        color: #26A4FF;
+        text-shadow: none;
+    }
+
+    a.reg:hover {
+        text-decoration: underline;
+    }
+
+    h2.for-api {
+        margin-top: 50px;
+        font-size: 18px;
+        align-items: center;
+        font-weight: 450;
+        line-height: 29px;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    }
+</style>
+<ul>
+    <li class="main-ul-li">
+        <strong>Franklin</strong> - идеальная платформа для тех, кто ищет онлайн курсы для обучения
+        <ul>
+            <li>В нашем ассортименте представлены сотни курсов самых разных <a class="reg" href="/categories">категорий</a></li>
+            <li>Мы сравниваем предложения крупнейших онлайн школ в России и подбираем наиболее подходящие для каждого пользователя</li>
+        </ul>
+    </li>
+    <li class="main-ul-li">
+        <strong>Franklin</strong> не только подберет курсы для обучения, но и поможет определиться с профессией.
+        <ul>
+            <li>Бесплатные тесты по профориентации <a class="reg" href="/tests">здесь</a></li>
+        {% if not current_user.id %}
+            <li>Для прохождения теста, пожалуйста, <a class="reg" href="/login">авторизируйтесь</a> или <a class="reg" href="/register">создайте новый аккаунт</a></li>
+        {% endif %}
+        </ul>
+    </li>
+</ul>
+<hr>
+<h1 class="main-h1">У нас есть Api</h1>
+<p>Api <strong>Franklin</strong> позволяет получить информацию о курсах и анонимных результатах прохождений тестов (результаты отдельно взятого пользователя получить невозможно!).</p>
+
+{% if current_user.id %}
+    <div class="view">
+        <h3 class="for-view">apikey: "{{ apikey }}"</h3>
+    </div>
+
+    <h2 class="for-api">Информация о курсах</h2>
+    <div class="view">
+        <h3 class="for-view">/api/courses?side_id=1&category_id=14&course_id=11</h3>
+    </div>
+    <p class="p-for-view"><strong>НЕ рекомендуется использовать сразу несколько параметров</strong></p>
+    <ul>
+        <li>side_id: уникальный индентификатор каждого направления</li>
+        <li>category_id: уникальный индентификатор каждой категории</li>
+        <li>course_id: уникальный индентификатор каждого курса</li>
+    </ul>
+
+    <h2 class="for-api">Результаты тестирований</h2>
+    <div class="view">
+        <h3 class="for-view">/api/results?test_id=1&result_id=15</h3>
+    </div>
+    <p class="p-for-view"><strong>НЕ рекомендуется использовать сразу несколько параметров</strong></p>
+    <ul>
+        <li>test_id: уникальный индентификатор каждого теста</li>
+        <li>result_id: уникальный индентификатор каждого результата</li>
+    </ul>
+
+
+{% else %}
+    <div class="view">
+        <h3 class="for-view">Получить apikey и полную документацию можно при <a class="reg" href="/register">регистрации</a></h3>
+        <p class="p-for-view">Уже есть аккаунт? Пройдите <a class="reg" href="/login">авторизацию</a></p>
+    </div>
+{% endif %}
+{% endblock %}

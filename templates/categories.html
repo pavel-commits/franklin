@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .view-block {
+        padding: 15px 10px 10px 10px;
+        display: flex;
+        justify-content: space-around;
+        align-content: space-around;
+    }
+
+    .view-block .information {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .view-block .information button:hover span {
+        color: #000000;
+    }
+
+    .view-block img {
+        max-width: 328px;
+        padding: 20px 0;
+    }
+
+    nav.categories ul {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    nav.categories ul li {
+        list-style: none;
+        text-align: center;
+    }
+
+    nav.categories ul li a {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        display: flex;
+        text-align: center;
+    }
+</style>
+
+{% for side in sides %}
+<div class="view">
+    <div class="view-block row">
+    <div class="information col-xs-12 col-md-8">
+        <h3 class="for-view">{{ side.name }}</h3>
+        <p class="p-for-view">{{ side.description }}</p>
+    </div>
+    <img class="col-xs-12 col-md-4" src="/static/img/{{ side.image }}" alt="{{ side.name }}">
+
+    <div class="categories-open hidden">
+        <h4 class="standart">Категории</h4>
+        <nav class="categories row">
+            <ul>
+                {% for category in side.categories if category.courses%}
+                <li class="col-12 col-xxl-3 col-lg-4 col-md-6">
+                    <a href="/categories/{{ category.id }}">
+                        {{ category.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+</div>
+<button class="standart">
+    Категории
+</button>
+</div>
+{% endfor %}
+<script type="text/javascript" src="{{ url_for('static', filename='/js/javascript.js') }}"></script>
+{% endblock %}

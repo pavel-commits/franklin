@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    h3.for-view {
+        text-align: left;
+    }
+
+    p.p-for-view {
+        text-align: left;
+    }
+
+    a.reg {
+        color: #26A4FF;
+        text-shadow: none;
+    }
+
+    a.reg:hover {
+        text-decoration: underline;
+    }
+</style>
+{% if current_user.id %}
+    <h3 class="for-view">
+        Вы вошли как <a class="reg" href="/profile">{{ current_user.name }} {{ current_user.surname }}</a>
+    </h3>
+    <p class="p-for-view">Хотите выйти? Нажмите <a class="reg" href="/log_out">Выйти</a></p>
+{% else %}
+<p>Еще нет аккаунта? Пройдите быструю <a class="reg" href="/register">регистрацию</a></p>
+<form action="/login" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email(class="form-control", type="email") }}<br>
+        {% for error in form.email.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password(class="form-control", type="password") }}<br>
+        {% for error in form.password.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    </p>
+    <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    <div>{{ message }}</div>
+</form>
+{% endif %}
+{% endblock %}

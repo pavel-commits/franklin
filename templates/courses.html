@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .view {
+        padding: 20px;
+    }
+
+    .name {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .name .name-right {
+        display: flex;
+        align-items: center;
+    }
+
+    .name img {
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+        margin-right: 10px;
+    }
+
+    .name .name-left {
+        display: flex;
+    }
+
+    .name .name-left span {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 31px;
+        display: flex;
+        align-items: center;
+    }
+
+    .name .name-left span svg {
+        margin-left: 5px;
+    }
+
+    .name-p-and-table {
+        margin: 10px 0;
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .view table.course-table {
+        margin: 20px 0;
+    }
+
+    .view table.course-table th, td {
+        position: relative;
+        width: 33.333%;
+        text-align: center;
+        border: 0.5px solid;
+    }
+
+    .else-categories {
+        display: flex;
+        align-items: center;
+    }
+
+    .else-categories h4 {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 31px;
+    }
+
+    .else-categories ul {
+        align-content: 10px;
+    }
+
+    .else-categories ul li {
+        list-style: none;
+        text-align: center;
+    }
+
+    .else-categories ul li a {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        text-align: center;
+    }
+</style>
+{% for course in courses %}
+<div class="view">
+    <header class="name">
+        <div class="name-right">
+            <img src="{{ course.image }}" alt="/">
+            <h3 class="for-view"><a href="{{ course.url }}" target="_blank">{{ course.name }}</a></h3>
+        </div>
+
+        {% if course.workability %}
+        <div class="name-left">
+            <span>Гарантия трудоустройства <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+            </svg></span>
+        </div>
+        {% endif %}
+    </header>
+    <div class="name-p-and-table row">
+        <p class="p-for-view col-12 col-lg-6">
+            {% if course.description %}
+                {{ course.description }}
+            {% else %}
+                {{ course.categories[0].side.description }}
+            {% endif %}
+        </p>
+        <table class="course-table col-8 col-lg-6">
+            <tr>
+                <th bgcolor="#E1CDCD">Школа</th>
+                <th bgcolor="#DEDEDE">Длительность</th>
+                <th bgcolor="#E1CDCD">Стоимость</th>
+            </tr>
+            <tr>
+                <td bgcolor="#DEDEDE">{{ course.brand }}</td>
+                <td bgcolor="#E1CDCD">{{ course.long }}</td>
+                <td bgcolor="#DEDEDE">{{ course.price }} рублей</td>
+            </tr>
+        </table>
+    </div>
+    <div class="else-categories row">
+        <h4 class="col-xxl-6 col-xs-12">Все категории этого курса:</h4>
+        <ul class="col-xxl-6 col-xs-12">
+            {% for category in course.categories %}
+                <li><a href="/categories/{{ category.id }}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

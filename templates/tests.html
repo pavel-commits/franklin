@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  h3.for-view {
+        text-align: left;
+    }
+
+    p.p-for-view {
+        text-align: left;
+    }
+</style>
+{% for test in tests %}
+  <div class="view">
+    <h3 class="for-view">
+      {{ test.name }}
+    </h3>
+    <p class="p-for-view">
+      {{ test.description }}
+    </p>
+    <a class="a-standart-button" href="/tests/{{ test.id }}">
+      Пройти
+    </a>
+  </div>
+{% endfor %}
+{% endblock %}

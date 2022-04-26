@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .view-block {
+        padding: 15px 10px 10px 10px;
+        display: flex;
+        justify-content: space-around;
+        align-content: space-around;
+    }
+
+    .view-block .information {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .view-block .information button:hover span {
+        color: #000000;
+    }
+
+    .view-wire {
+        margin-bottom: 50px;
+    }
+
+    .view-wire table th {
+        text-align: center;
+        padding: 10px 10px;
+    }
+
+    .view-wire table td {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    h3.for-view {
+        text-align: left;
+    }
+
+    p.p-for-view {
+        text-align: left;
+    }
+</style>
+<div class="view view-wire">
+    <table>
+        <tr>
+            <th>Имя:</th>
+            <td>{{ profile.name }} {{ profile.surname }}</td>
+        </tr>
+        <tr>
+            <th>emil:</th>
+            <td>{{ profile.email }}</td>
+        </tr>
+        <tr>
+            <th>На сайте:</th>
+            <td>{{ profile.date }}</td>
+        </tr>
+        <tr>
+            <th>Пройдено тестов:</th>
+            <td>{{ profile.results|length }}</td>
+        </tr>
+    </table>
+</div>
+<h4>Результаты</h4>
+{% for result in profile.results %}
+    <div class="view">
+        <div class="view-block row">
+            <h3 class="for-view"><a href="/tests/{{ result.test.id }}">{{ result.test.name }}</a></h3>
+            <p class="p-for-view">
+                {{ result.test.description }}
+            </p>
+         <a class="a-standart-button" href="/result/{{ result.id }}">
+            Смотреть
+        </a>
+    </div>
+    </div>
+{% endfor %}
+{% endblock %}

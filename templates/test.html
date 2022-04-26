@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    h3.for-view {
+        text-align: left;
+        text-shadow: none;
+    }
+
+    label.answer-label {
+        margin: 10px 0 0 20px;
+    }
+
+    label.answer-label span {
+        font-weight: 400;
+        font-size: 15px;
+        align-items: center;
+    }
+
+    button.standart {
+        margin: 50px auto 120px;
+    }
+
+</style>
+
+<form action="{{ action }}" method="post">
+{% for question_num in range(test.questions|length) %}
+<div class="question view">
+    <h3 class="for-view">{{ test.questions[question_num].question }}</h3>
+     <div class="answers">
+         {% for answer_num in range(test.questions[question_num].answers|length) %}
+         <p>
+             <label class="answer-label" for="{{question_num}}{{answer_num}}">
+                 <input class="answer-input"
+                        type="radio"
+                        value="{{ test.questions[question_num].answers[answer_num].json_number }}"
+                        name="{{question_num}}"
+                        id="{{question_num}}{{answer_num}}"
+                        required>
+                 <span>{{ test.questions[question_num].answers[answer_num].answer }}</span>
+             </label>
+         </p>
+         {% endfor %}
+     </div>
+</div>
+{% endfor %}
+<button type="submit" class="standart">
+    Результаты
+</button>
+</form>
+{% endblock %}

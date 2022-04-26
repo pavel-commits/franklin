@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    h3.for-view {
+        text-align: left;
+    }
+
+    p.p-for-view {
+        text-align: left;
+    }
+
+    a.reg {
+        color: #26A4FF;
+        text-shadow: none;
+    }
+
+    a.reg:hover {
+        text-decoration: underline;
+    }
+</style>
+{% if current_user.id %}
+    <h3 class="for-view">
+        Вы вошли как <a class="reg" href="/profile">{{ current_user.name }} {{ current_user.surname }}</a>
+    </h3>
+    <p class="p-for-view">Хотите выйти? Нажмите <a class="reg" href="/log_out">Выйти</a></p>
+{% else %}
+<p>Уже есть аккаунт? <a class="reg" href="/login">Авторизируйтесь</a></p>
+<form action="/register" method="post">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }}
+    {{ form.name(class="form-control") }}
+    {% for error in form.name.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+    <br>
+    {{ form.surname.label }}
+    {{ form.surname(class="form-control") }}
+    {% for error in form.surname.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+    <br>
+    {{ form.email.label }}
+    {{ form.email(class="form-control", type="email") }}
+    {% for error in form.email.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+    <br>
+    {{ form.password.label }}
+    {{ form.password(class="form-control", type="password") }}
+    {% for error in form.password.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+    <br>
+    {{ form.password_again.label }}
+    {{ form.password_again(class="form-control", type="password") }}
+    {% for error in form.password_again.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+    <br>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {% if message %}
+    <div class="alert alert-danger" role="alert">
+            {{message}}
+    </div>
+    {% endif %}
+</form>
+{% endif %}
+{% endblock %}
+
+
+

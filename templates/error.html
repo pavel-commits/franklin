@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    a.reg {
+        color: #26A4FF;
+        text-shadow: none;
+    }
+
+    a.reg:hover {
+        text-decoration: underline;
+    }
+</style>
+<p><span>{{ error_id }}</span>, {{ message }}</p>
+{% if links %}
+<a href="{{ links[0] }}" class="reg">{{ links[1] }}</a>
+{% endif %}
+{% endblock %}
